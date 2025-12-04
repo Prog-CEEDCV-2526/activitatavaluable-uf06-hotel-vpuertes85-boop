@@ -111,6 +111,34 @@ public class App {
      */
     public static void gestionarOpcio(int opcio) {
        //TODO:
+       switch (opcio) {
+        case 1:
+            reservarHabitacio();
+            break;
+
+        case 2:
+            alliberarHabitacio();
+            break;
+
+        case 3:
+            consultarDisponibilitat();
+            break;
+
+        case 4:
+            obtindreReservaPerTipus();
+            break;
+
+        case 5:
+            obtindreReserva();
+            break;
+       
+        case 6: 
+            break;
+            
+        default:
+            System.out.println("La opció triada no es correcta. Tria altra!");
+            break;
+       }
     }
 
     /**
@@ -120,7 +148,8 @@ public class App {
     public static void reservarHabitacio() {
         System.out.println("\n===== RESERVAR HABITACIÓ =====");
         //TODO:
-        
+        seleccionarTipusHabitacio(); //esta linea es solo de prueba , hay que borrarla tras la prueba
+        seleccionarTipusHabitacioDisponible(); //esta linea es solo de prueba , hay que borrarla tras la prueba
     }
 
     /**
@@ -129,7 +158,29 @@ public class App {
      */
     public static String seleccionarTipusHabitacio() {
         //TODO:
-        return null;
+        
+        System.out.println("Tipus d'habitacions:");
+        System.out.println("1. " + TIPUS_ESTANDARD);
+        System.out.println("2. " + TIPUS_SUITE);
+        System.out.println("3. " + TIPUS_DELUXE);
+        System.out.println("Per favor, tria el tipus d'habitació. ");
+        int opcio = llegirEnter("Número: ");
+
+        while (opcio < 1 || opcio > 3) {
+            System.out.println("Opció no vàlida");
+            opcio = llegirEnter("Torna a triar entre 1, 2 o 3: ");
+        }
+        
+        String tipus = null;
+        if (opcio == 1) {
+            tipus = TIPUS_ESTANDARD;
+        } else if (opcio == 2) {
+            tipus = TIPUS_SUITE;
+        } else if (opcio == 3) {
+            tipus = TIPUS_DELUXE;
+        }
+
+        return tipus;
     }
 
     /**
@@ -140,7 +191,20 @@ public class App {
     public static String seleccionarTipusHabitacioDisponible() {
         System.out.println("\nTipus d'habitació disponibles:");
         //TODO:
-        return null;
+        mostrarInfoTipus(TIPUS_ESTANDARD);
+        mostrarInfoTipus(TIPUS_SUITE);
+        mostrarInfoTipus(TIPUS_DELUXE);
+
+        String tipustriat = seleccionarTipusHabitacio();
+
+        int cuantesDispo = disponibilitatHabitacions.get(tipustriat);
+        if (cuantesDispo > 0) {
+            return tipustriat;
+        } else {
+            System.out.println("No queden habitacions d'eixe tipus");
+            return null;
+        }
+
     }
 
     /**
