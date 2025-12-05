@@ -150,6 +150,7 @@ public class App {
         //TODO:
         seleccionarTipusHabitacio(); //esta linea es solo de prueba , hay que borrarla tras la prueba
         seleccionarTipusHabitacioDisponible(); //esta linea es solo de prueba , hay que borrarla tras la prueba
+        seleccionarServeis(); //esta linea es solo de prueba , hay que borrarla tras la prueba
     }
 
     /**
@@ -159,12 +160,13 @@ public class App {
     public static String seleccionarTipusHabitacio() {
         //TODO:
         
-        System.out.println("Tipus d'habitacions:");
+        System.out.println("\nTipus d'habitacions:");
         System.out.println("1. " + TIPUS_ESTANDARD);
         System.out.println("2. " + TIPUS_SUITE);
         System.out.println("3. " + TIPUS_DELUXE);
         System.out.println("Per favor, tria el tipus d'habitació. ");
-        int opcio = llegirEnter("Número: ");
+        
+        int opcio = llegirEnter("Número: "); //Variable creada para leer el entero
 
         while (opcio < 1 || opcio > 3) {
             System.out.println("Opció no vàlida");
@@ -214,6 +216,45 @@ public class App {
     public static ArrayList<String> seleccionarServeis() {
         //TODO:
 
+        //Mensaje para el usuario:
+        System.out.println("\nServeis adicionals: ");
+        System.out.println("1. " + SERVEI_ESMORZAR);
+        System.out.println("2. " + SERVEI_GIMNAS);
+        System.out.println("3. " + SERVEI_SPA);
+        System.out.println("4. " + SERVEI_PISCINA);
+
+        ArrayList<String> triaServeis = new ArrayList<>();
+
+        int opcioServei = llegirEnter("\nTria un servei adicional: "); //Se crea la variable tipo entero para leer/guardar el número que ponga el usuario. Usando el método auxiliar.
+
+        while (opcioServei > 0 && triaServeis.size() < 4 ) { //Mientras elija más de 0 y no sean más de 4, repite el bucle, sigue pidiendo. //size controla el limite de los servicios , que son 4 cómo máximo.
+            
+            switch (opcioServei) { //Uso un switch para traducir el número que hna puesto el usuario.
+                case 1:
+                    triaServeis.add(SERVEI_ESMORZAR); //si elije 1, añadimos el servicio a la lista. Así con las demás opciones.
+                    break;
+            
+                case 2:
+                    triaServeis.add(SERVEI_GIMNAS); 
+                    break;
+                
+                case 3:
+                    triaServeis.add(SERVEI_SPA); 
+                    break;
+
+                case 4:
+                    triaServeis.add(SERVEI_PISCINA); 
+                    break;
+
+                default:
+                    System.out.println("\nLa opció triada no es vàlida. ");
+                    break;
+
+            }
+            //Preguntar al usuario si quiere añadir otro servicio: 
+            opcioServei = llegirEnter("\nVols afegir altre servei? ");
+
+        }
         return null;
     }
 
