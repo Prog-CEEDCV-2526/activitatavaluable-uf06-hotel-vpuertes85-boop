@@ -148,6 +148,9 @@ public class App {
     public static void reservarHabitacio() {
         System.out.println("\n===== RESERVAR HABITACIÓ =====");
         //TODO:
+
+        //Aquí es donde vamos a conectar todas las funciones 
+
         seleccionarTipusHabitacio(); //esta linea es solo de prueba , hay que borrarla tras la prueba
         seleccionarTipusHabitacioDisponible(); //esta linea es solo de prueba , hay que borrarla tras la prueba
         seleccionarServeis(); //esta linea es solo de prueba , hay que borrarla tras la prueba
@@ -231,19 +234,36 @@ public class App {
             
             switch (opcioServei) { //Uso un switch para traducir el número que hna puesto el usuario.
                 case 1:
-                    triaServeis.add(SERVEI_ESMORZAR); //si elije 1, añadimos el servicio a la lista. Así con las demás opciones.
+                    //Necesitamos un if para comprobar si los servicios elegidos se repiten o no, ya que no se pueden repertir. Lo aplicamos en los 4 casos:
+                    if (triaServeis.contains(SERVEI_ESMORZAR)) { //Si la lista triaServeis contiene SERVEIS_ESMORZAR..
+                        System.out.println("Servei ja triat");
+                    } else {
+                        triaServeis.add(SERVEI_ESMORZAR); //Si no está en la lista, añadirlo.
+                    }
                     break;
-            
+                    
                 case 2:
-                    triaServeis.add(SERVEI_GIMNAS); 
+                    if (triaServeis.contains(SERVEI_GIMNAS)) {
+                        System.out.println("Servei ja triat");
+                    } else {
+                        triaServeis.add(SERVEI_GIMNAS);
+                    }
                     break;
                 
                 case 3:
-                    triaServeis.add(SERVEI_SPA); 
+                     if (triaServeis.contains(SERVEI_SPA)) {
+                        System.out.println("Servei ja triat");
+                    } else {
+                        triaServeis.add(SERVEI_SPA);
+                    }
                     break;
 
                 case 4:
-                    triaServeis.add(SERVEI_PISCINA); 
+                    if (triaServeis.contains(SERVEI_PISCINA)) {
+                        System.out.println("Servei ja triat");
+                    } else {
+                        triaServeis.add(SERVEI_PISCINA);
+                    }
                     break;
 
                 default:
@@ -251,20 +271,35 @@ public class App {
                     break;
 
             }
-            //Preguntar al usuario si quiere añadir otro servicio: 
+            //Preguntar al usuario si quiere añadir otro servicio: //Si el usuario pone un 0 , sale del bucle porque NO cumple la condición del while.
             opcioServei = llegirEnter("\nVols afegir altre servei? ");
 
         }
-        return null;
+        return triaServeis; //Devolvemos la lista
     }
 
     /**
      * Calcula i retorna el cost total de la reserva, incloent l'habitació,
      * els serveis seleccionats i l'IVA.
      */
-    public static float calcularPreuTotal(String tipusHabitacio, ArrayList<String> serveisSeleccionats) {
+    public static float calcularPreuTotal(String tipusHabitacio, ArrayList<String> serveisSeleccionats) { 
         //TODO:
-        return 0;
+        //## Repasar!, esta es una de las que más me ha costado
+
+        float precioTotal = 0;  //Primero necesitamos una variable que acumule el precio total (Habitación, servicios, IVA). La iniciamos a 0.
+        float precioHabitacion = preusHabitacions.get(tipusHabitacio); //Creamos una variable que guarde el precio de la habitación seleccionada. Necesitamos get para obtener el precio del tipo de habitación.
+        
+        precioTotal = precioTotal + precioHabitacion; //Hay que sumar el precio de la habitación al precio total , para que el total vaya teniendo algún valor, para ello actualizamos la variable precioTotal
+        
+        //
+        for (String servicio : serveisSeleccionats) {  //servicio es la variable que recibe cada servicio seleccionado del ArrayList mientras lo recorremos. Es String por que ese array es una lista de tipo string.
+            float precioServicio =  preusServeis.get(servicio); //Se crea una variable para guardar el precio del servicio , éste nos lo da preuServeis usando el método get. Que previamente se guardó en servicio.
+            precioTotal = precioTotal + precioServicio; //Sumamos (actualizamos) el precio del servicio a la variable del precio total
+        }
+
+        precioTotal = precioTotal + (precioTotal * IVA); //Para el IVA , multiplicamos el precio total por el IVA. Se pone entre () por que esa operación tiene que hacerse primero y luego hacemos la suma.
+
+        return precioTotal;
     }
 
     /**
