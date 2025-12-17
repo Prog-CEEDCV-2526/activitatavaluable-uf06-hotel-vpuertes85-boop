@@ -1,6 +1,7 @@
 package com.hotel;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -149,11 +150,51 @@ public class App {
         System.out.println("\n===== RESERVAR HABITACIÓ =====");
         //TODO:
 
-        //Aquí es donde vamos a conectar todas las funciones 
+        //Aquí es donde vamos a conectar todas las funciones y mostrar los mensajes al clientes de esas funciones. 
+        //Esta función es la que llama a todas las funciones que preguntan al cliente, las que necesitamos para gestionar la reserva.
+        //Cada función llamada nos indica el tipo de función y lo que nos devuelve
 
-        seleccionarTipusHabitacio(); //esta linea es solo de prueba , hay que borrarla tras la prueba
-        seleccionarTipusHabitacioDisponible(); //esta linea es solo de prueba , hay que borrarla tras la prueba
-        seleccionarServeis(); //esta linea es solo de prueba , hay que borrarla tras la prueba
+        String tipusHabitacio = seleccionarTipusHabitacioDisponible(); //Creamos variable para guardar el tipo de habitación que el cliente haya seleccionado.
+        if (tipusHabitacio == null) {
+            return;  //reservarHabitacio es void, quiere decir que es un valor que no devuelve nada,. Si no hay disponibilidad el programa se interrumpe y no sigue la ejecución. (Se para la reserva)
+        }
+
+        ArrayList<String> serveisSeleccionats = seleccionarServeis(); //Únicamente llamámos a la función de los servicios adicionales, que es nos devolvía un array list de tipo String. Por que la validación ya está hecha en su correspondiente función.
+                                                                      //La lista se guarda en serveisSeleccionats.
+
+        float precioTotalReserva = calcularPreuTotal(tipusHabitacio, serveisSeleccionats); //Llamamos a la función que calculaba el precio total calcularPreutotal , con la habitación y los servicios añadidos que se encuentran en las dos variables creadas anteriores.
+
+        System.out.println("\nPreu total de la reserva: " + precioTotalReserva); //Mostramos el precio total de la reserva
+        
+        int codigoReserva = generarCodiReserva(); //Guardamos el código reserva llamándo a su función.
+
+        //Repasar! Complicado
+        //Guardamos la reseva, necesitamos un arraylist con la lista de la habitación, servicio y precio. 
+        // Para el servicio añadido usuaremos metodo StringvalueOf(); es un método de la clase String para convertir tipos primitivos en cadenas de texto.
+        ArrayList<String> datosReserva = new ArrayList<>();
+        datosReserva.add(tipusHabitacio);    //Añadimos el tipo de habitación como primer elemento
+        datosReserva.add(String.valueOf(precioTotalReserva)); //Añade el precio total de la reserva, el métdodo convierte el float en texto.
+        
+        //Añadimos los servicios de la reserva.
+        for (String servicios : serveisSeleccionats) {  //Recorremos los servicios seleccionados
+            datosReserva.add(servicios);                 //Los añadimos a los datos de la reserva
+        }
+
+        //Guardamos la reserva en el Hasmap reserva
+        reserves.put(codigoReserva, datosReserva); //El código es la clave y datosReseva el valor
+        
+        //Usamos el hasmap para que nos diga el la disponibilidad de habitaciones, 
+        //Lo guardaremos en una variable int , ya que el valor que devuelve el hasmap es un integer
+        int disponibilidad = disponibilitatHabitacions.get(tipusHabitacio);
+
+        //restamos 1 al número de habitaciones , porque si un cliente reserva una habitación hay una menos disponible y eso se tiene que guardar en el sistema.
+        int actualDisponibilidad = disponibilidad -1;  //operación aritmética
+
+        //Guardamos la nueva actualDisponibilidad en el hashMap disponibilitatHabitacions
+        disponibilitatHabitacions.put(tipusHabitacio,actualDisponibilidad);
+
+
+        System.out.println("\nEl seu codi de reserva es: " + codigoReserva);
     }
 
     /**
@@ -194,7 +235,7 @@ public class App {
      * habitacions disponibles. En cas contrari, retorna null.
      */
     public static String seleccionarTipusHabitacioDisponible() {
-        System.out.println("\nTipus d'habitació disponibles:");
+        System.out.println("\nDisponibilitat d'habitacions:");
         //TODO:
         mostrarInfoTipus(TIPUS_ESTANDARD);
         mostrarInfoTipus(TIPUS_SUITE);
@@ -308,7 +349,14 @@ public class App {
      */
     public static int generarCodiReserva() {
         //TODO:
-        return 0;
+        //Aquí necesitamos el objeto random de la clase Random, que es la que java usa para generar números aleatorioso.
+        //Y llamaremos a reservers para comprobar que el código de reserva no se repita
+        int codigo = 100 + random.nextInt(900); //Creamos variable codigo para almacenar un código generado aleatorio por random entre 100 y 900
+        while (reserves.containsKey(codigo)) { //Mientras el código se repita en reserves, genera otro codigo 
+            codigo = 100 + random.nextInt(900);
+        }
+        
+        return codigo; //Devuelve el código
     }
 
     /**
@@ -318,6 +366,7 @@ public class App {
     public static void alliberarHabitacio() {
         System.out.println("\n===== ALLIBERAR HABITACIÓ =====");
          // TODO: Demanar codi, tornar habitació i eliminar reserva
+
     }
 
     /**
