@@ -262,6 +262,7 @@ public class App {
 
         //Mensaje para el usuario:
         System.out.println("\nServeis adicionals: ");
+        System.out.println("0. Finalitzar");
         System.out.println("1. " + SERVEI_ESMORZAR);
         System.out.println("2. " + SERVEI_GIMNAS);
         System.out.println("3. " + SERVEI_SPA);
@@ -269,9 +270,9 @@ public class App {
 
         ArrayList<String> triaServeis = new ArrayList<>();
 
-        int opcioServei = llegirEnter("\nTria un servei adicional: "); //Se crea la variable tipo entero para leer/guardar el número que ponga el usuario. Usando el método auxiliar.
+        int opcioServei = llegirEnter("\nTria un servei adicional (0 per finalitzar): "); //Se crea la variable tipo entero para leer/guardar el número que ponga el usuario. Usando el método auxiliar.
 
-        while (opcioServei > 0 && triaServeis.size() < 4 ) { //Mientras elija más de 0 y no sean más de 4, repite el bucle, sigue pidiendo. //size controla el limite de los servicios , que son 4 cómo máximo.
+        while (opcioServei != 0 && triaServeis.size() < 4 ) { //Mientras elija más de 0 y no sean más de 4, repite el bucle, sigue pidiendo. //size controla el limite de los servicios , que son 4 cómo máximo.
             
             switch (opcioServei) { //Uso un switch para traducir el número que hna puesto el usuario.
                 case 1:
@@ -313,7 +314,9 @@ public class App {
 
             }
             //Preguntar al usuario si quiere añadir otro servicio: //Si el usuario pone un 0 , sale del bucle porque NO cumple la condición del while.
-            opcioServei = llegirEnter("\nVols afegir altre servei? ");
+            if (triaServeis.size() < 4) {
+            opcioServei = llegirEnter("\nTria un servei adicional (0 per finalitzar): ");
+        }
 
         }
         return triaServeis; //Devolvemos la lista
