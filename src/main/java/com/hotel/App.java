@@ -315,7 +315,7 @@ public class App {
             }
             //Preguntar al usuario si quiere añadir otro servicio: //Si el usuario pone un 0 , sale del bucle porque NO cumple la condición del while.
             if (triaServeis.size() < 4) {
-            opcioServei = llegirEnter("\nVols afegir altre servei? (0 per finalitzar): ");
+            opcioServei = llegirEnter("\nVols afegir un servici? (0 per finalitzar): ");
         }
 
         }
@@ -393,7 +393,10 @@ public class App {
     public static void obtindreReserva() {
         System.out.println("\n===== CONSULTAR RESERVA =====");
         // TODO: Mostrar dades d'una reserva concreta
- 
+
+        int leerCodigo = llegirEnter("Introdueix el codi de reserva: "); //Variable creada para leer el entero que introduzca el usuario.
+        
+        mostrarDadesReserva(leerCodigo); //Llamámos a mostrarDadesReserva para que muestre los datos de reserva asociada al código introducido por el usuario.
     }
 
     /**
@@ -403,6 +406,7 @@ public class App {
     public static void obtindreReservaPerTipus() {
         System.out.println("\n===== CONSULTAR RESERVES PER TIPUS =====");
         // TODO: Llistar reserves per tipus
+        
     }
 
     /**
