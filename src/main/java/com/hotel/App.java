@@ -427,7 +427,7 @@ public class App {
        System.out.println("Codi: " + codi);
        System.out.println("Dades de la reserva:");
        System.out.println("Tipus d'habitació: " + datosReserva.get(0));  //Muestra y obtiene la posición 0 del array , que es el tipo de habitación
-       System.out.println("Cost total: " + datosReserva.get(1) + "€");   //Muestra y obtiene la posición 1 del array, el precio 
+       System.out.println("Costos total: " + datosReserva.get(1) + "€");   //Muestra y obtiene la posición 1 del array, el precio 
 
        //Recorremos las posiciones del array para mostrar los servicios adicionales (para ello un for normal):
        System.out.println("Serveis addicionals:");
