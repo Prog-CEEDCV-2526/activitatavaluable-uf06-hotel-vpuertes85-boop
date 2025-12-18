@@ -1,4 +1,5 @@
 package com.hotel;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -168,7 +169,7 @@ public class App {
         
         int codigoReserva = generarCodiReserva(); //Guardamos el código reserva llamándo a su función.
 
-        //Repasar! Complicado
+        
         //Guardamos la reseva, necesitamos un arraylist con la lista de la habitación, servicio y precio. 
         // Para el servicio añadido usuaremos metodo StringvalueOf(); es un método de la clase String para convertir tipos primitivos en cadenas de texto.
         ArrayList<String> datosReserva = new ArrayList<>();
@@ -370,6 +371,35 @@ public class App {
         System.out.println("\n===== ALLIBERAR HABITACIÓ =====");
          // TODO: Demanar codi, tornar habitació i eliminar reserva
 
+         int codigoReserva = llegirEnter("\nIntrodueix el codi de reserva: "); //Creamos variable para que guarde el código de reserva introducido por el usuario con el método llegirEnter.
+  
+         //Commprobamos si el código existe o no 
+         if (!reserves.containsKey(codigoReserva)) {  //Si el código de reserva no existe, muestra el mensaje por pantalla.
+         System.out.println("No s'ha trobat cap reserva amb aquest codi.");
+
+         return; //Sale del método.
+        }
+        
+        //Obtenemos la reserva:
+        ArrayList<String> datosReserva = reserves.get(codigoReserva); 
+
+        //Liberamos habitación:
+        String tipoHabitacion = datosReserva.get(0); //Recordamos que el tipo de habitación está en la posición 0
+
+        //Obtenemos disponibilidad:
+        int nuevaDisponibilidad = disponibilitatHabitacions.get(tipoHabitacion);
+
+        //Actualizamos las habitaciones. Habrá que sumar una a la disponiblidad , ya que se ha liberado una habitación:
+        int sumaDisponiblidad = nuevaDisponibilidad + 1;
+
+        //Guardamos la nueva disponibilidad en disponibilitatHabitacions , lo guardamos en el HashMap con la clave y el valor, ya que tipoHabitacio es un String y sumaDisponiblidad es un Integer. El Hashmap está asi declarado.
+        disponibilitatHabitacions.put(tipoHabitacion, sumaDisponiblidad);  
+
+        //Eliminamos la reserva, para ello usamos su código:
+        reserves.remove(codigoReserva);
+
+        System.out.println("\nHabitació alliberada correctament.");
+        System.out.println("Disponibilitat actualitzada.");
     }
 
     /**
@@ -383,9 +413,6 @@ public class App {
         mostrarDisponibilitatTipus(TIPUS_ESTANDARD);
         mostrarDisponibilitatTipus(TIPUS_SUITE);
         mostrarDisponibilitatTipus(TIPUS_DELUXE);
-
-        
-        
     }
 
     /**
