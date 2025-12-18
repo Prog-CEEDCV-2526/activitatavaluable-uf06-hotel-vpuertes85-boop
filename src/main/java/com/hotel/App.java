@@ -377,6 +377,15 @@ public class App {
      */
     public static void consultarDisponibilitat() {
         // TODO: Mostrar lliures i ocupades
+        System.out.println("\n===== DISPONIBILITAT D'HABITACIONS =====");
+        System.out.println("Tipus\t\tLliures\tOcupades");
+        //Aquí simplemente llamámos al método mostrarDisponibilitatTipus con las variables globales que tiene.
+        mostrarDisponibilitatTipus(TIPUS_ESTANDARD);
+        mostrarDisponibilitatTipus(TIPUS_SUITE);
+        mostrarDisponibilitatTipus(TIPUS_DELUXE);
+
+        
+        
     }
 
     /**
@@ -420,7 +429,7 @@ public class App {
        // Si existe, se salta el if y continúa la ejecución de la función.
 
        if (!reserves.containsKey(codi)) {  //Si el código de reserva no existe, muestra el mensaje por pantalla.
-        System.out.println("No s'ha trobat cap reserva amb aquest codi." + codi);
+        System.out.println("No s'ha trobat cap reserva amb aquest codi.");
 
         return;  //salir del método para no seguir ejecutando código incorrecto. (detiene el programa)
        }
