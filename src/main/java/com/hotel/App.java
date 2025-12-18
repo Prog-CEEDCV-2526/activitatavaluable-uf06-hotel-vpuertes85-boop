@@ -372,12 +372,14 @@ public class App {
          // TODO: Demanar codi, tornar habitació i eliminar reserva
 
          int codigoReserva = llegirEnter("\nIntrodueix el codi de reserva: "); //Creamos variable para que guarde el código de reserva introducido por el usuario con el método llegirEnter.
-  
+
          //Commprobamos si el código existe o no 
          if (!reserves.containsKey(codigoReserva)) {  //Si el código de reserva no existe, muestra el mensaje por pantalla.
          System.out.println("No s'ha trobat cap reserva amb aquest codi.");
-
+        
          return; //Sale del método.
+        } else {
+            System.out.println("Reserva trobada! ");
         }
         
         //Obtenemos la reserva:
@@ -442,7 +444,29 @@ public class App {
     public static void obtindreReservaPerTipus() {
         System.out.println("\n===== CONSULTAR RESERVES PER TIPUS =====");
         // TODO: Llistar reserves per tipus
+        //### REPASAR ESTA FUNCIÓN ###
+
+        //Hay que mostrar todas las reservas de un tipo de habitación
+
+        //Saber el tipo de habitación. Llamámos al método que tiene almacenado el tipo de habitación escogida por el usuario, y lo guardamos en una variable
+        String tipoHabitacion = seleccionarTipusHabitacio(); 
+
+        //Creamos un array para sacar los códigos de reservas que tiene almancenado reserves
+       int[] codigos = new int[reserves.size()];
         
+       // Creamos un contador/índice para saber en qué posición del array 'codigos' vamos guardando.
+       // Empieza en 0 porque los arrays en Java empiezan en la posición 0.
+       int i = 0;
+
+      // Recorremos todas las CLAVES del hasMap reserves.
+      // El reserves.keySet() devuelve el conjunto de códigos de reserva (Integer).
+      // En cada vuelta del bucle codi vale un código distinto
+       for (int codi : reserves.keySet()) {
+            codigos[i] = codi;  //Gurdamos cada código en el array
+            i++;                //Pasamos a la siguiente posición del array
+       }
+
+       llistarReservesPerTipus(codigos, tipoHabitacion); //llamámos a la función llistarReservesPerTipus
     }
 
     /**
