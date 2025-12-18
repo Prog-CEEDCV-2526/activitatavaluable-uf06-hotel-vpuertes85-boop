@@ -416,7 +416,7 @@ public class App {
        // Si existe, se salta el if y continúa la ejecución de la función.
 
        if (!reserves.containsKey(codi)) {  //Si el código de reserva no existe, muestra el mensaje por pantalla.
-        System.out.println("No s'ha trobat cap reserva amb aquest codi.");
+        System.out.println("No s'ha trobat cap reserva amb aquest codi." + codi);
 
         return;  //salir del método para no seguir ejecutando código incorrecto. (detiene el programa)
        }
@@ -424,6 +424,7 @@ public class App {
        //Obtenemos los datos de la reserva:
        ArrayList<String> datosReserva = reserves.get(codi);
        
+       System.out.println("Codi: " + codi);
        System.out.println("Dades de la reserva:");
        System.out.println("Tipus d'habitació: " + datosReserva.get(0));  //Muestra y obtiene la posición 0 del array , que es el tipo de habitación
        System.out.println("Cost total: " + datosReserva.get(1) + "€");   //Muestra y obtiene la posición 1 del array, el precio 
