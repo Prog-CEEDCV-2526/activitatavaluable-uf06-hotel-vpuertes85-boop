@@ -315,7 +315,7 @@ public class App {
             }
             //Preguntar al usuario si quiere añadir otro servicio: //Si el usuario pone un 0 , sale del bucle porque NO cumple la condición del while.
             if (triaServeis.size() < 4) {
-            opcioServei = llegirEnter("\nTria un servei adicional (0 per finalitzar): ");
+            opcioServei = llegirEnter("\nVols afegir altre servei? (0 per finalitzar): ");
         }
 
         }
@@ -410,6 +410,32 @@ public class App {
      */
     public static void mostrarDadesReserva(int codi) {
        // TODO: Imprimir tota la informació d'una reserva
+       
+       // Comprobamos si existe o no el código.
+       // Si NO existe, se muestra el mensaje y se sale del método.
+       // Si existe, se salta el if y continúa la ejecución de la función.
+
+       if (!reserves.containsKey(codi)) {  //Si el código de reserva no existe, muestra el mensaje por pantalla.
+        System.out.println("No s'ha trobat cap reserva amb aquest codi.");
+
+        return;  //salir del método para no seguir ejecutando código incorrecto. (detiene el programa)
+       }
+
+       //Obtenemos los datos de la reserva:
+       ArrayList<String> datosReserva = reserves.get(codi);
+       
+       System.out.println("Dades de la reserva:");
+       System.out.println("Tipus d'habitació: " + datosReserva.get(0));  //Muestra y obtiene la posición 0 del array , que es el tipo de habitación
+       System.out.println("Cost total: " + datosReserva.get(1) + "€");   //Muestra y obtiene la posición 1 del array, el precio 
+
+       //Recorremos las posiciones del array para mostrar los servicios adicionales (para ello un for normal):
+       System.out.println("Serveis addicionals:");
+
+       for (int i = 2; i < datosReserva.size(); i++) {  //Empezamos con la posición 2 , que es dónde empiezan los servicios adicionales, y con el metodo size para que llegue al final de todas las posiciones.
+       System.out.println(datosReserva.get(i));
+       }
+       return;
+
     }
 
     // --------- MÈTODES AUXILIARS (PER MILLORAR LEGIBILITAT) ---------
