@@ -423,6 +423,7 @@ public class App {
      */
     public static void llistarReservesPerTipus(int[] codis, String tipus) {
          // TODO: Implementar recursivitat
+         
     }
 
     /**
